@@ -38,6 +38,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Cursor
+    uniqueID: 825492517
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: GridBackGround
+    uniqueID: 1996579133
+    locked: 0
+  - name: UI
+    uniqueID: 2805738657
     locked: 0
