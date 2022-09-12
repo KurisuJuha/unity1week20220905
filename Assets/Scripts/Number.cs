@@ -31,6 +31,7 @@ public class Number : MonoBehaviour
             spriterenderers.Add(sr);
             go.transform.SetParent(transform);
             go.transform.localPosition = new Vector3(-spriterenderers.Count * (4 / 16f), 0, 0);
+            sr.sortingLayerName = "";
         }
 
         for (int i = 0; i < spriterenderers.Count; i++)

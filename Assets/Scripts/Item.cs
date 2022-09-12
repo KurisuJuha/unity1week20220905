@@ -10,7 +10,7 @@ public struct Item
     {
         Tile tile = new Tile(pos);
 
-        tile.id = id;
+        tile.id = GameManager.Instance.settings.items[id].tileID;
 
         return tile;
     }

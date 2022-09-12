@@ -5,11 +5,18 @@ using UnityEngine;
 public class TickManager : SingletonMonoBehaviour<TickManager>
 {
     public List<IEnumerator> jobs;
+    public float interval;
+    public int JobCount;
 
     void Start()
     {
         jobs = new List<IEnumerator>();
         StartCoroutine(tick());
+    }
+
+    private void Update()
+    {
+        JobCount = jobs.Count;
     }
 
     IEnumerator tick()
@@ -27,7 +34,7 @@ public class TickManager : SingletonMonoBehaviour<TickManager>
             jobs.Clear();
             jobs = list;
 
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(interval);
         }
     }
 

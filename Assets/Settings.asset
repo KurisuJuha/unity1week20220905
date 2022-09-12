@@ -17,23 +17,268 @@ MonoBehaviour:
     Tile: {fileID: 11400000, guid: dc703d73991a5794cb8e4afe7ccd4da3, type: 2}
     canTakeDamage: 0
     dulability: 0
+    dropItems: []
   - Name: Stone
     Tile: {fileID: 11400000, guid: 1c79e540a225f034ab7655a121cc6dd0, type: 2}
     canTakeDamage: 1
     dulability: 3
+    dropItems:
+    - id: 14
+      min: 2
+      max: 3
+      threshold: 0
+  - Name: Hasigo
+    Tile: {fileID: 11400000, guid: d8b8f1c8157855145855bd44dc84e291, type: 2}
+    canTakeDamage: 1
+    dulability: 3
+    dropItems:
+    - id: 8
+      min: 1
+      max: 1
+      threshold: 0
+  - Name: CraftBench
+    Tile: {fileID: 11400000, guid: b8f18c2119e1bf14da5f0c35bee0b0dc, type: 2}
+    canTakeDamage: 1
+    dulability: 3
+    dropItems:
+    - id: 9
+      min: 1
+      max: 1
+      threshold: 0
+  - Name: Furnace
+    Tile: {fileID: 11400000, guid: f6c827c4d71ba9a47a8aef9b5144694e, type: 2}
+    canTakeDamage: 1
+    dulability: 3
+    dropItems:
+    - id: 10
+      min: 1
+      max: 1
+      threshold: 0
+  - Name: Tree
+    Tile: {fileID: 11400000, guid: 7f6199267b201d6468363eb892ffc1e6, type: 2}
+    canTakeDamage: 1
+    dulability: 3
+    dropItems:
+    - id: 15
+      min: 2
+      max: 3
+      threshold: 0
+  - Name: TameruBox
+    Tile: {fileID: 11400000, guid: bbd3fc6559c57e643bd796ff7b0755f8, type: 2}
+    canTakeDamage: 0
+    dulability: 10
+    dropItems: []
+  - Name: UnderStone
+    Tile: {fileID: 11400000, guid: 9f9fc5e647ad94646ac3a24ee27c85cf, type: 2}
+    canTakeDamage: 1
+    dulability: 30
+    dropItems:
+    - id: 14
+      min: 5
+      max: 7
+      threshold: 0
+  - Name: UnderIronStone
+    Tile: {fileID: 11400000, guid: 9f867c3cc34215241bc7b4347f1687cf, type: 2}
+    canTakeDamage: 1
+    dulability: 40
+    dropItems:
+    - id: 5
+      min: 2
+      max: 3
+      threshold: 0
+    - id: 14
+      min: 5
+      max: 7
+      threshold: 0
+  - Name: UnderGoldStone
+    Tile: {fileID: 11400000, guid: 97bfde9ad11709340ad8c0890809a790, type: 2}
+    canTakeDamage: 1
+    dulability: 50
+    dropItems:
+    - id: 6
+      min: 2
+      max: 3
+      threshold: 0
+    - id: 14
+      min: 5
+      max: 7
+      threshold: 0
+  - Name: UnderDiamondStone
+    Tile: {fileID: 11400000, guid: e0416052f4cc7ad479300bb06e53cf18, type: 2}
+    canTakeDamage: 1
+    dulability: 60
+    dropItems:
+    - id: 7
+      min: 2
+      max: 3
+      threshold: 0
+    - id: 14
+      min: 5
+      max: 7
+      threshold: 0
   items:
   - Name: Empty
     Sprite: {fileID: 21300000, guid: a2d705d1a19eab94094cdc2880cc155c, type: 3}
     CanPlace: 0
     tileID: 0
-  - Name: Stone
-    Sprite: {fileID: 21300000, guid: 366f47107636b2a4281756a93a128989, type: 3}
-    CanPlace: 1
-    tileID: 1
+    AttackPower: 1
+    Can_CraftBench: 0
+    Can_Furnace: 0
+    Materials: []
   - Name: NormalPickaxe
     Sprite: {fileID: 21300000, guid: 912d48efa3362c74b9b209c38e49b58d, type: 3}
     CanPlace: 0
     tileID: 0
+    AttackPower: 2
+    Can_CraftBench: 0
+    Can_Furnace: 0
+    Materials:
+    - id: 14
+      quantity: 3
+    - id: 15
+      quantity: 1
+  - Name: IronPickaxe
+    Sprite: {fileID: 21300000, guid: 05102d82d237903458e7c4f8226ff7b3, type: 3}
+    CanPlace: 0
+    tileID: 0
+    AttackPower: 3
+    Can_CraftBench: 0
+    Can_Furnace: 0
+    Materials:
+    - id: 11
+      quantity: 3
+    - id: 15
+      quantity: 1
+  - Name: GoldPickaxe
+    Sprite: {fileID: 21300000, guid: 4ff7e6278727faa45b1fe055ae6052f5, type: 3}
+    CanPlace: 0
+    tileID: 0
+    AttackPower: 4
+    Can_CraftBench: 0
+    Can_Furnace: 0
+    Materials: []
+  - Name: DiamondPickaxe
+    Sprite: {fileID: 21300000, guid: bd5947f0bcae8e6459f8e4312fdc99f4, type: 3}
+    CanPlace: 0
+    tileID: 0
+    AttackPower: 5
+    Can_CraftBench: 0
+    Can_Furnace: 0
+    Materials: []
+  - Name: IronOre
+    Sprite: {fileID: 21300000, guid: 3a8093d37418c9649b426708ec681837, type: 3}
+    CanPlace: 0
+    tileID: 0
+    AttackPower: 1
+    Can_CraftBench: 0
+    Can_Furnace: 0
+    Materials: []
+  - Name: GoldOre
+    Sprite: {fileID: 21300000, guid: 5f22167aef2932a44b7bf00dc9395f1c, type: 3}
+    CanPlace: 0
+    tileID: 0
+    AttackPower: 1
+    Can_CraftBench: 0
+    Can_Furnace: 0
+    Materials: []
+  - Name: DiamondOre
+    Sprite: {fileID: 21300000, guid: 7247c327937928a40be1d4b58ccc51ac, type: 3}
+    CanPlace: 0
+    tileID: 0
+    AttackPower: 1
+    Can_CraftBench: 0
+    Can_Furnace: 0
+    Materials: []
+  - Name: Hasigo
+    Sprite: {fileID: 21300000, guid: 8f15d558ab429c949a8afb6f07e4ee45, type: 3}
+    CanPlace: 1
+    tileID: 2
+    AttackPower: 1
+    Can_CraftBench: 1
+    Can_Furnace: 0
+    Materials:
+    - id: 15
+      quantity: 10
+  - Name: CraftBench
+    Sprite: {fileID: 21300000, guid: 1135b2cd281369b48914c13a69962ef7, type: 3}
+    CanPlace: 1
+    tileID: 3
+    AttackPower: 1
+    Can_CraftBench: 1
+    Can_Furnace: 0
+    Materials:
+    - id: 15
+      quantity: 5
+  - Name: Furnace
+    Sprite: {fileID: 21300000, guid: 8697e2abd56b18c40a5ea2aac908331d, type: 3}
+    CanPlace: 1
+    tileID: 4
+    AttackPower: 1
+    Can_CraftBench: 1
+    Can_Furnace: 0
+    Materials:
+    - id: 14
+      quantity: 10
+  - Name: IronIngot
+    Sprite: {fileID: 21300000, guid: a1b7496a185a1374ebe78e57b8807069, type: 3}
+    CanPlace: 0
+    tileID: 0
+    AttackPower: 1
+    Can_CraftBench: 0
+    Can_Furnace: 1
+    Materials:
+    - id: 5
+      quantity: 5
+    - id: 16
+      quantity: 5
+  - Name: GoldIngot
+    Sprite: {fileID: 21300000, guid: 77f74625524c2bf4ca22ca3e71564100, type: 3}
+    CanPlace: 0
+    tileID: 0
+    AttackPower: 1
+    Can_CraftBench: 0
+    Can_Furnace: 1
+    Materials:
+    - id: 6
+      quantity: 5
+    - id: 16
+      quantity: 5
+  - Name: Diamond
+    Sprite: {fileID: 21300000, guid: 8270a588182244943a697a6045af8d3a, type: 3}
+    CanPlace: 0
+    tileID: 0
+    AttackPower: 5
+    Can_CraftBench: 0
+    Can_Furnace: 1
+    Materials:
+    - id: 7
+      quantity: 5
+    - id: 16
+      quantity: 1
+  - Name: Rock
+    Sprite: {fileID: 21300000, guid: 27dfd8ef4a1286c408487fed915a8af6, type: 3}
+    CanPlace: 0
+    tileID: 0
+    AttackPower: 1
+    Can_CraftBench: 0
+    Can_Furnace: 0
+    Materials: []
+  - Name: Wood
+    Sprite: {fileID: 21300000, guid: cab94f250e9bc354da18656679f3a290, type: 3}
+    CanPlace: 0
+    tileID: 0
+    AttackPower: 1
+    Can_CraftBench: 0
+    Can_Furnace: 0
+    Materials: []
+  - Name: Coal
+    Sprite: {fileID: 21300000, guid: 3d1e8c99830980f44a43fbc40fc06f02, type: 3}
+    CanPlace: 0
+    tileID: 0
+    AttackPower: 1
+    Can_CraftBench: 0
+    Can_Furnace: 0
+    Materials: []
   numbers:
   - {fileID: 847124153, guid: 3e7604f0172cf29408cb35f6734f3879, type: 3}
   - {fileID: -2113529927, guid: 3e7604f0172cf29408cb35f6734f3879, type: 3}
@@ -45,3 +290,5 @@ MonoBehaviour:
   - {fileID: -1926163931, guid: 3e7604f0172cf29408cb35f6734f3879, type: 3}
   - {fileID: -578443097, guid: 3e7604f0172cf29408cb35f6734f3879, type: 3}
   - {fileID: -1560648507, guid: 3e7604f0172cf29408cb35f6734f3879, type: 3}
+  recoveryPerTick: 0.03
+  dropItemIgnoreTime: 3

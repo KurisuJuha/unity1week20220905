@@ -10,4 +10,5 @@ public class TileData
     public TileBase Tile;
     public bool canTakeDamage;
     public int dulability;
+    public DropData[] dropItems;
 }
