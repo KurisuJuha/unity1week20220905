@@ -7,7 +7,9 @@ using UnityEngine.Tilemaps;
 public static class MapData
 {
     private static Dictionary<Vector2Int, Chunk>[] map = new Dictionary<Vector2Int, Chunk>[2];
-    private static Dimension CurrentDimension;
+    private static Dimension CurrentDimension = Dimension.Ground;
+    
+    public static bool Changing;
 
     /// <summary>
     /// 指定されたチャンクにデータがある場合それを返し、
@@ -25,7 +27,7 @@ public static class MapData
 
         if (!map[(int)dimension].TryGetValue(chunkPos, out Chunk chunk))
         {
-            chunk = new Chunk(chunkPos);
+            chunk = new Chunk(chunkPos, dimension, dimension == CurrentDimension);
             map[(int)dimension].Add(chunkPos, chunk);
         }
 
@@ -96,26 +98,15 @@ public static class MapData
     /// <param name="dimension"></param>
     public static void ChangeDimension(Dimension dimension)
     {
+        Changing = true;
         Vector2Int[] keys = map[(int)CurrentDimension].Keys.ToArray();
         // 古いDropItemの描画を消す
         DropItemManager.Instance.SetActive(false);
 
         CurrentDimension = dimension;
 
-        // 描画を更新
-        foreach (var chunkpos in keys)
-        {
-            for (int y = 0; y < 10; y++)
-            {
-                for (int x = 0; x < 10; x++)
-                {
-                    UpdateTile(chunkpos, new Vector2Int(x, y));
-                }
-            }
-        }
-
-        // 新しいDropItemを描画する
-        DropItemManager.Instance.SetActive(true);
+        //Transitionする
+        DimensionTransition.Change(dimension, keys);
     }
 
     /// <summary>

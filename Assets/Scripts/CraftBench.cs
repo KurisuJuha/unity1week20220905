@@ -36,6 +36,9 @@ public class CraftBench : MonoBehaviour
                 case CraftBenchMode.Furnace:
                     if (Utility.GetItemData(i).Can_Furnace) items.Add(i);
                     break;
+                case CraftBenchMode.HandCraft:
+                    if (Utility.GetItemData(i).Can_HandCraft) items.Add(i);
+                    break;
                 default:
                     break;
             }
@@ -101,6 +104,7 @@ public class CraftBench : MonoBehaviour
             Item item = new Item() { id = id };
             if (!Inventory.AddItem(item))
             {
+
                 DropItemManager.Instance.NewDropItem(item, 1, Player.PlayerPos);
             }
 
@@ -118,5 +122,6 @@ public class CraftBench : MonoBehaviour
 public enum CraftBenchMode
 {
     CraftBench,
-    Furnace
+    Furnace,
+    HandCraft,
 }

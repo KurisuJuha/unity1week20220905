@@ -14,7 +14,7 @@ public struct DropData
     {
         (bool drop, int id, int quantity) ret;
 
-        int a = Random.Range(min, max + 1);
+        int a = Random.Range(min, Mathf.CeilToInt(max * SkillManager.Instance.card_luck) + 1);
 
         ret.drop = a > threshold;
         ret.id = id;

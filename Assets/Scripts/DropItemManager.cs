@@ -20,6 +20,8 @@ public class DropItemManager : SingletonMonoBehaviour<DropItemManager>
 
     public void NewDropItem(Item item, int quantity, Vector2 pos)
     {
+        if (dropItems[(int)MapData.GetDimension()] == null) dropItems[(int)MapData.GetDimension()] = new List<DropItem>();
+
         // 近くに同じidのアイテムがある場合はそっちに数を足して新しいdropitemは生成しない
         foreach (var drop in dropItems[(int)MapData.GetDimension()])
         {
@@ -41,6 +43,8 @@ public class DropItemManager : SingletonMonoBehaviour<DropItemManager>
 
     public void DestroyDropItem(DropItem dropItem)
     {
+        if (dropItems[(int)MapData.GetDimension()] == null) dropItems[(int)MapData.GetDimension()] = new List<DropItem>();
+
         dropItems[(int)MapData.GetDimension()].Remove(dropItem);
         Destroy(dropItem.gameObject);
     }

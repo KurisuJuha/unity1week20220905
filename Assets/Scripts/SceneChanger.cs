@@ -14,6 +14,7 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
     public GameObject InventoryObj;
     public GameObject TitleObj;
     public GameObject PressAnyKeyObj;
+    public GameObject GaugeObj;
     public PixelPerfectCamera CameraObj;
     public SpriteRenderer CursorObj;
     public CinemachineVirtualCamera VCameraObj;
@@ -25,6 +26,8 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
     public Vector2 TitleEndPos;
     public Vector2 PressAnyKeyStartPos;
     public Vector2 PressAnyKeyEndPos;
+    public Vector2 GaugeStartPos;
+    public Vector2 GaugeEndPos;
     public int CameraStartPPU;
     public int CameraEndPPU;
     public float CursorStartAlpha;
@@ -46,6 +49,7 @@ public class SceneChanger : SingletonMonoBehaviour<SceneChanger>
         TitleObj.transform.localPosition = Vector2.Lerp(TitleStartPos, TitleEndPos, per);
         PressAnyKeyObj.transform.localPosition = Vector2.Lerp(PressAnyKeyStartPos, PressAnyKeyEndPos, per);
         CameraObj.assetsPPU = Mathf.FloorToInt(Mathf.Lerp(CameraStartPPU, CameraEndPPU, per));
+        GaugeObj.transform.localPosition = Vector2.Lerp(GaugeStartPos, GaugeEndPos, per);
         Color c = CursorObj.color;
         CursorObj.color = new Color(c.r, c.g, c.b, Mathf.Lerp(CursorStartAlpha, CursorEndAlpha, per));
         transposer.m_TrackedObjectOffset = Vector2.Lerp(VCameraStartPos, VCameraEndPos, per);

@@ -10,6 +10,7 @@ public class UINumber : MonoBehaviour
     public List<int> numbers;
     public List<Image> spriterenderers;
     public GameObject obj;
+    public bool zero = false;
 
     void Start()
     {
@@ -46,6 +47,10 @@ public class UINumber : MonoBehaviour
     {
         int num = number;
         numbers.Clear();
+        if (number == 0 && zero)
+        {
+            numbers.Add(0);
+        }
         while (0 < num)
         {
             numbers.Add(num % 10);

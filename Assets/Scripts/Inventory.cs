@@ -58,12 +58,16 @@ public static class Inventory
         for (int i = 0; i < 9; i++)
         {
             // 同じidのアイテムがあった場合
-            if (data[i].id == item.id)
+            if (data[i].id == item.id
+                && quantity[i] < 99)
             {
                 quantity[i]++;
                 return true;
             }
+        }
 
+        for (int i = 0; i < 9; i++)
+        {
             // Emptyアイテムだった場合
             if (data[i].id == 0)
             {

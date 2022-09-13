@@ -34,45 +34,21 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        #region Debug
-        Inventory.data[0].id = 4;
-        Inventory.quantity[0] = 10;
-
-        Chunk chunk = MapData.GetChunk(new Vector2Int(0, 0));
-        for (int i = 0; i < 7; i++)
-        {
-            MapData.SetTile(new Vector2(i, 0), i);
-            MapData.SetTile(new Vector2(i, 1), 1);
-        }
-
-        MapData.ChangeDimension(Dimension.UnderGround);
-        for (int y = 0; y < 9; y++)
-        {
-            for (int x = 0; x < 9; x++)
-            {
-                MapData.SetTile(new Vector2(x, y), 7);
-            }
-        }
-
-        for (int y = 0; y < 3; y++)
-        {
-            for (int x = 0; x < 3; x++)
-            {
-                MapData.SetTile(new Vector2(x, y) + new Vector2(3, 3), 0);
-            }
-        }
-
-        MapData.SetTile(new Vector2(15, 15), 7);
-        MapData.SetTile(new Vector2(15, 16), 7);
-        MapData.SetTile(new Vector2(16, 15), 7);
-        MapData.SetTile(new Vector2(15, 14), 7);
-        MapData.SetTile(new Vector2(14, 15), 7);
-
-        #endregion
-
         HandElapsed = HandInterval;
-        DropItemManager.Instance.NewDropItem(new Item() { id = 1 }, 2, transform.position);
         StartCoroutine(WalkAudio());
+
+        // プレイヤーの周囲3x3をemptyにする
+        Vector2Int size = new Vector2Int(3, 3);
+        for (int y = 0; y < size.y; y++)
+        {
+            for (int x = 0; x < size.x; x++)
+            {
+                MapData.SetTile(transform.position + new Vector3(x - size.x / 2, y - size.y / 2), 0);
+            }
+        }
+
+        // 1,1にtameruboxを設置する
+        MapData.SetTile(new Vector2(1, 1), 6);
     }
 
     void Update()
@@ -87,7 +63,7 @@ public class Player : MonoBehaviour
         {
             for (int x = 0; x < loadSize.x; x++)
             {
-                MapData.GetChunk(playerChunk - new Vector2Int(x - loadSize.x / 2, loadSize.y - 3 / 2));
+                MapData.GetChunk(playerChunk - new Vector2Int(x - loadSize.x / 2, y - loadSize.y / 2));
             }
         }
 
@@ -112,13 +88,18 @@ public class Player : MonoBehaviour
         rb2d.velocity = velo;
 
         // 経過時間関係
-        HandElapsed += Time.deltaTime;
+        HandElapsed += Time.deltaTime * SkillManager.Instance.card_speed;
         if (HandElapsed > HandInterval) HandElapsed = HandInterval;
 
-        if (Input.GetKeyDown(KeyCode.C))
+        // ハンドクラフト
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            if (MapData.GetDimension() == Dimension.UnderGround) MapData.ChangeDimension(Dimension.Ground);
-            else MapData.ChangeDimension(Dimension.UnderGround);
+            CraftBenchObj.SetActive(true);
+            CraftBench.mode = CraftBenchMode.HandCraft;
+            StartCoroutine(usetile(-1, () =>
+            {
+                CraftBenchObj.SetActive(false);
+            }));
         }
     }
 
@@ -162,6 +143,24 @@ public class Player : MonoBehaviour
                 MapData.SetTile(PlayerCursor.Pos, Inventory.PeekItem(HandIndex));
                 Inventory.quantity[HandIndex]--;
 
+                if (Inventory.PeekItem(HandIndex).id == 8)
+                {
+                    Vector2Int size = new Vector2Int(10, 10);
+                    for (int y = 0; y < size.y; y++)
+                    {
+                        for (int x = 0; x < size.x; x++)
+                        {
+                            Vector2 pos = PlayerCursor.Pos + new Vector2(x - size.x / 2, y - size.y / 2);
+                            Vector2Int tilepos = Utility.GetTilePos(pos);
+                            Chunk c = MapData.GetChunk(Utility.GetChunkPos(pos), Dimension.UnderGround);
+                            c.tiles[tilepos.x, tilepos.y].id = 0;
+                        }
+                    }
+
+                    Chunk chunk = MapData.GetChunk(PlayerCursor.chunkPos, Dimension.UnderGround);
+                    chunk.tiles[PlayerCursor.tilePos.x, PlayerCursor.tilePos.y].id = 2;
+                }
+
                 // もしアイテム数が0ならidも削除する
                 if (Inventory.quantity[HandIndex] == 0) Inventory.data[HandIndex] = new Item() { id = 0 };
 
@@ -193,6 +192,27 @@ public class Player : MonoBehaviour
                         CraftBenchObj.SetActive(false);
                     }));
                     break;
+                // はしご
+                case 2:
+                    Dimension dimension;
+                    if (MapData.GetDimension() == Dimension.UnderGround) dimension = Dimension.Ground;
+                    else dimension = Dimension.UnderGround;
+                    MapData.ChangeDimension(dimension);
+                    HandElapsed = 0;
+                    break;
+                // タメルボックス
+                case 6:
+                    int id = Inventory.PeekItem(HandIndex).id;
+                    if (Utility.GetItemData(id).Can_AddPoint
+                        && Inventory.quantity[HandIndex] > 0) 
+                    {
+                        PointManager.AddPoint(id);
+                        Inventory.quantity[HandIndex]--;
+                        if (Inventory.quantity[HandIndex] <= 0) Inventory.data[HandIndex] = new Item() { id = 0 };
+                        AudioManager.Play(AudioType.Success);
+                    }
+                    HandElapsed = HandInterval - 0.1f;
+                    break;
                 default:
                     break;
             }
@@ -207,7 +227,14 @@ public class Player : MonoBehaviour
         if (HandElapsed >= HandInterval)
         {
             int power = Utility.GetItemData(Inventory.data[HandIndex].id).AttackPower;
+            power = Mathf.CeilToInt(power * SkillManager.Instance.card_power);
             MapData.GetChunk(PlayerCursor.chunkPos).tiles[PlayerCursor.tilePos.x, PlayerCursor.tilePos.y].addDamage(power);
+
+            // クリティカル
+            if (Random.Range(0, SkillManager.Instance.card_critical) > 1)
+            {
+                MapData.GetChunk(PlayerCursor.chunkPos).tiles[PlayerCursor.tilePos.x, PlayerCursor.tilePos.y].addDamage(power);
+            }
 
             HandElapsed = 0;
             AudioManager.Play(AudioType.Attack);
@@ -235,9 +262,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// -1の場合は現在のタイルを初期値とする
+    /// </summary>
     IEnumerator usetile(int id, System.Action finish)
     {
         var pos = PlayerCursor.Pos;
+        if (id == -1)
+        {
+            id = MapData.GetChunk(PlayerCursor.chunkPos).tiles[PlayerCursor.tilePos.x, PlayerCursor.tilePos.y].id;
+        }
+
         while (true)
         {
             if (MapData.GetChunk(PlayerCursor.chunkPos).tiles[PlayerCursor.tilePos.x, PlayerCursor.tilePos.y].id != id) break;

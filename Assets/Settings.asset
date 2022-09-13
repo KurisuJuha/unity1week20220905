@@ -74,13 +74,13 @@ MonoBehaviour:
     dulability: 30
     dropItems:
     - id: 14
-      min: 5
-      max: 7
+      min: 10
+      max: 15
       threshold: 0
   - Name: UnderIronStone
     Tile: {fileID: 11400000, guid: 9f867c3cc34215241bc7b4347f1687cf, type: 2}
     canTakeDamage: 1
-    dulability: 40
+    dulability: 100
     dropItems:
     - id: 5
       min: 2
@@ -93,7 +93,7 @@ MonoBehaviour:
   - Name: UnderGoldStone
     Tile: {fileID: 11400000, guid: 97bfde9ad11709340ad8c0890809a790, type: 2}
     canTakeDamage: 1
-    dulability: 50
+    dulability: 500
     dropItems:
     - id: 6
       min: 2
@@ -106,7 +106,7 @@ MonoBehaviour:
   - Name: UnderDiamondStone
     Tile: {fileID: 11400000, guid: e0416052f4cc7ad479300bb06e53cf18, type: 2}
     canTakeDamage: 1
-    dulability: 60
+    dulability: 1200
     dropItems:
     - id: 7
       min: 2
@@ -124,47 +124,76 @@ MonoBehaviour:
     AttackPower: 1
     Can_CraftBench: 0
     Can_Furnace: 0
+    Can_HandCraft: 0
     Materials: []
+    Can_AddPoint: 0
+    point: 0
   - Name: NormalPickaxe
     Sprite: {fileID: 21300000, guid: 912d48efa3362c74b9b209c38e49b58d, type: 3}
     CanPlace: 0
     tileID: 0
     AttackPower: 2
-    Can_CraftBench: 0
+    Can_CraftBench: 1
     Can_Furnace: 0
+    Can_HandCraft: 0
     Materials:
     - id: 14
       quantity: 3
     - id: 15
       quantity: 1
+    Can_AddPoint: 0
+    point: 0
   - Name: IronPickaxe
     Sprite: {fileID: 21300000, guid: 05102d82d237903458e7c4f8226ff7b3, type: 3}
     CanPlace: 0
     tileID: 0
     AttackPower: 3
-    Can_CraftBench: 0
+    Can_CraftBench: 1
     Can_Furnace: 0
+    Can_HandCraft: 0
     Materials:
     - id: 11
       quantity: 3
     - id: 15
       quantity: 1
+    - id: 1
+      quantity: 1
+    Can_AddPoint: 0
+    point: 0
   - Name: GoldPickaxe
     Sprite: {fileID: 21300000, guid: 4ff7e6278727faa45b1fe055ae6052f5, type: 3}
     CanPlace: 0
     tileID: 0
     AttackPower: 4
-    Can_CraftBench: 0
+    Can_CraftBench: 1
     Can_Furnace: 0
-    Materials: []
+    Can_HandCraft: 0
+    Materials:
+    - id: 12
+      quantity: 3
+    - id: 15
+      quantity: 1
+    - id: 2
+      quantity: 1
+    Can_AddPoint: 0
+    point: 0
   - Name: DiamondPickaxe
     Sprite: {fileID: 21300000, guid: bd5947f0bcae8e6459f8e4312fdc99f4, type: 3}
     CanPlace: 0
     tileID: 0
-    AttackPower: 5
-    Can_CraftBench: 0
+    AttackPower: 8
+    Can_CraftBench: 1
     Can_Furnace: 0
-    Materials: []
+    Can_HandCraft: 0
+    Materials:
+    - id: 13
+      quantity: 3
+    - id: 15
+      quantity: 1
+    - id: 3
+      quantity: 1
+    Can_AddPoint: 0
+    point: 0
   - Name: IronOre
     Sprite: {fileID: 21300000, guid: 3a8093d37418c9649b426708ec681837, type: 3}
     CanPlace: 0
@@ -172,7 +201,10 @@ MonoBehaviour:
     AttackPower: 1
     Can_CraftBench: 0
     Can_Furnace: 0
+    Can_HandCraft: 0
     Materials: []
+    Can_AddPoint: 0
+    point: 0
   - Name: GoldOre
     Sprite: {fileID: 21300000, guid: 5f22167aef2932a44b7bf00dc9395f1c, type: 3}
     CanPlace: 0
@@ -180,7 +212,10 @@ MonoBehaviour:
     AttackPower: 1
     Can_CraftBench: 0
     Can_Furnace: 0
+    Can_HandCraft: 0
     Materials: []
+    Can_AddPoint: 0
+    point: 0
   - Name: DiamondOre
     Sprite: {fileID: 21300000, guid: 7247c327937928a40be1d4b58ccc51ac, type: 3}
     CanPlace: 0
@@ -188,7 +223,10 @@ MonoBehaviour:
     AttackPower: 1
     Can_CraftBench: 0
     Can_Furnace: 0
+    Can_HandCraft: 0
     Materials: []
+    Can_AddPoint: 0
+    point: 0
   - Name: Hasigo
     Sprite: {fileID: 21300000, guid: 8f15d558ab429c949a8afb6f07e4ee45, type: 3}
     CanPlace: 1
@@ -196,9 +234,12 @@ MonoBehaviour:
     AttackPower: 1
     Can_CraftBench: 1
     Can_Furnace: 0
+    Can_HandCraft: 0
     Materials:
     - id: 15
       quantity: 10
+    Can_AddPoint: 0
+    point: 0
   - Name: CraftBench
     Sprite: {fileID: 21300000, guid: 1135b2cd281369b48914c13a69962ef7, type: 3}
     CanPlace: 1
@@ -206,9 +247,12 @@ MonoBehaviour:
     AttackPower: 1
     Can_CraftBench: 1
     Can_Furnace: 0
+    Can_HandCraft: 1
     Materials:
     - id: 15
       quantity: 5
+    Can_AddPoint: 0
+    point: 0
   - Name: Furnace
     Sprite: {fileID: 21300000, guid: 8697e2abd56b18c40a5ea2aac908331d, type: 3}
     CanPlace: 1
@@ -216,9 +260,12 @@ MonoBehaviour:
     AttackPower: 1
     Can_CraftBench: 1
     Can_Furnace: 0
+    Can_HandCraft: 0
     Materials:
     - id: 14
       quantity: 10
+    Can_AddPoint: 0
+    point: 0
   - Name: IronIngot
     Sprite: {fileID: 21300000, guid: a1b7496a185a1374ebe78e57b8807069, type: 3}
     CanPlace: 0
@@ -226,11 +273,14 @@ MonoBehaviour:
     AttackPower: 1
     Can_CraftBench: 0
     Can_Furnace: 1
+    Can_HandCraft: 0
     Materials:
     - id: 5
       quantity: 5
     - id: 16
-      quantity: 5
+      quantity: 1
+    Can_AddPoint: 1
+    point: 20
   - Name: GoldIngot
     Sprite: {fileID: 21300000, guid: 77f74625524c2bf4ca22ca3e71564100, type: 3}
     CanPlace: 0
@@ -238,11 +288,14 @@ MonoBehaviour:
     AttackPower: 1
     Can_CraftBench: 0
     Can_Furnace: 1
+    Can_HandCraft: 0
     Materials:
     - id: 6
       quantity: 5
     - id: 16
-      quantity: 5
+      quantity: 1
+    Can_AddPoint: 1
+    point: 40
   - Name: Diamond
     Sprite: {fileID: 21300000, guid: 8270a588182244943a697a6045af8d3a, type: 3}
     CanPlace: 0
@@ -250,11 +303,14 @@ MonoBehaviour:
     AttackPower: 5
     Can_CraftBench: 0
     Can_Furnace: 1
+    Can_HandCraft: 0
     Materials:
     - id: 7
       quantity: 5
     - id: 16
       quantity: 1
+    Can_AddPoint: 1
+    point: 200
   - Name: Rock
     Sprite: {fileID: 21300000, guid: 27dfd8ef4a1286c408487fed915a8af6, type: 3}
     CanPlace: 0
@@ -262,7 +318,10 @@ MonoBehaviour:
     AttackPower: 1
     Can_CraftBench: 0
     Can_Furnace: 0
+    Can_HandCraft: 0
     Materials: []
+    Can_AddPoint: 1
+    point: 1
   - Name: Wood
     Sprite: {fileID: 21300000, guid: cab94f250e9bc354da18656679f3a290, type: 3}
     CanPlace: 0
@@ -270,15 +329,23 @@ MonoBehaviour:
     AttackPower: 1
     Can_CraftBench: 0
     Can_Furnace: 0
+    Can_HandCraft: 0
     Materials: []
+    Can_AddPoint: 0
+    point: 0
   - Name: Coal
     Sprite: {fileID: 21300000, guid: 3d1e8c99830980f44a43fbc40fc06f02, type: 3}
     CanPlace: 0
     tileID: 0
     AttackPower: 1
     Can_CraftBench: 0
-    Can_Furnace: 0
-    Materials: []
+    Can_Furnace: 1
+    Can_HandCraft: 0
+    Materials:
+    - id: 15
+      quantity: 3
+    Can_AddPoint: 0
+    point: 0
   numbers:
   - {fileID: 847124153, guid: 3e7604f0172cf29408cb35f6734f3879, type: 3}
   - {fileID: -2113529927, guid: 3e7604f0172cf29408cb35f6734f3879, type: 3}
@@ -290,5 +357,38 @@ MonoBehaviour:
   - {fileID: -1926163931, guid: 3e7604f0172cf29408cb35f6734f3879, type: 3}
   - {fileID: -578443097, guid: 3e7604f0172cf29408cb35f6734f3879, type: 3}
   - {fileID: -1560648507, guid: 3e7604f0172cf29408cb35f6734f3879, type: 3}
+  cards:
+  - sprite: {fileID: 21300000, guid: a2354855e1957d1428929086142f4975, type: 3}
+    add: 0.1
+  - sprite: {fileID: 21300000, guid: ba36a47a4bd89da439676a0a75112fd7, type: 3}
+    add: 0.1
+  - sprite: {fileID: 21300000, guid: 2db9ca041f9183a45a34881cbd324c74, type: 3}
+    add: 0.1
+  - sprite: {fileID: 21300000, guid: 52e2ba2dc50ae784e9562c6d5b617741, type: 3}
+    add: 0.1
   recoveryPerTick: 0.03
   dropItemIgnoreTime: 3
+  MaxPointCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 100
+      value: 1000
+      inSlope: 21.171677
+      outSlope: 21.171677
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.018319244
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

@@ -14,4 +14,9 @@ public struct Item
 
         return tile;
     }
+
+    public override string ToString()
+    {
+        return "(" + id.ToString() + ")";
+    }
 }
