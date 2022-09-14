@@ -13,9 +13,6 @@ public static class GameInput
     public static Action AttackDown;
     public static Action AttackUp;
 
-    // 移動
-    public static Vector2 Velocity;
-
     // ハンドクラフト
     public static Action HandCraft;
     public static Action HandCraftDown;
@@ -27,7 +24,16 @@ public static class GameInput
     public static Action DropUp;
 
     // タイトル
-    public static Action Esc;
-    public static Action EscDown;
-    public static Action EscUp;
+    public static Action Title;
+    public static Action TitleDown;
+    public static Action TitleUp;
+
+
+
+
+    // マウス位置
+    public static Vector2 MousePosition;
+
+    // 移動
+    public static Vector2 MoveVector;
 }
