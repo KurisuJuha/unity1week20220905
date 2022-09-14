@@ -8,21 +8,26 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb2d;
     public PlayerAnimator animator;
     public float speed;
-    private static int _HandIndex;
-    public static int HandIndex
+    private static float _handIndex;
+    private static float HandIndexFloat
     {
-        get { return _HandIndex; }
+        get { return _handIndex; }
         set
         {
-            int i = value;
+            float i = value;
             while (i < 0)
             {
                 i += 9;
             }
             i %= 9;
 
-            _HandIndex = i;
+            _handIndex = i;
         }
+    }
+    public static int HandIndex
+    {
+        get { return Mathf.FloorToInt(HandIndexFloat); }
+        set { HandIndexFloat = value; }
     }
     public float HandInterval;
     public float HandElapsed;
@@ -54,7 +59,9 @@ public class Player : MonoBehaviour
     void Update()
     {
         PlayerPos = transform.position;
-        Vector2 velo = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * speed;
+        Vector2 velo = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        velo = Vector2.ClampMagnitude(velo, 1);
+        velo *= speed;
 
         // プレイヤーの周囲3x3を読み込む
         Vector2Int playerChunk = Utility.GetChunkPos(transform.position);
@@ -72,9 +79,9 @@ public class Player : MonoBehaviour
         else animator.state = PlayerAnimationState.Idle;
 
         // 設置
-        if (Input.GetKey(KeyCode.K)) Set();
+        if (Input.GetMouseButton(1)) Set();
         // 破壊
-        if (Input.GetKey(KeyCode.J)) Attack();
+        if (Input.GetMouseButton(0)) Attack();
         // ドロップ
         if (Input.GetKeyDown(KeyCode.Q)) Drop();
         // HandIndex操作
@@ -119,9 +126,8 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha8)) HandIndex = 7;
         if (Input.GetKeyDown(KeyCode.Alpha9)) HandIndex = 8;
 
-        // HとL
-        if (Input.GetKeyDown(KeyCode.U)) HandIndex--;
-        if (Input.GetKeyDown(KeyCode.I)) HandIndex++;
+        // マウスホイール
+        HandIndexFloat += Input.mouseScrollDelta.y;
     }
 
     /// <summary>
@@ -204,7 +210,7 @@ public class Player : MonoBehaviour
                 case 6:
                     int id = Inventory.PeekItem(HandIndex).id;
                     if (Utility.GetItemData(id).Can_AddPoint
-                        && Inventory.quantity[HandIndex] > 0) 
+                        && Inventory.quantity[HandIndex] > 0)
                     {
                         PointManager.AddPoint(id);
                         Inventory.quantity[HandIndex]--;

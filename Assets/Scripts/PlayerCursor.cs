@@ -18,16 +18,10 @@ public class PlayerCursor : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetAxisRaw("Horizontal") != 0)
-        {
-            direction.x = Input.GetAxisRaw("Horizontal");
-            direction.y = 0;
-        }
-        if (Input.GetAxisRaw("Vertical") != 0)
-        {
-            direction.y = Input.GetAxisRaw("Vertical");
-            direction.x = 0;
-        }
+        direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        direction = new Vector2(Mathf.Floor(direction.x), Mathf.Floor(direction.y));
+        direction -= new Vector2(Mathf.Floor(Player.transform.position.x), Mathf.Floor(Player.transform.position.y));
+        direction = new Vector2(Mathf.Clamp(direction.x, -1, 1), Mathf.Clamp(direction.y, -1, 1));
 
         transform.position = new Vector2(Mathf.Floor(Player.transform.position.x), Mathf.Floor(Player.transform.position.y)) + direction + new Vector2(0.5f, 0.5f);
 
