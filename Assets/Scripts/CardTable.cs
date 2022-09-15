@@ -19,12 +19,10 @@ public class CardTable : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) index--;
-        if (Input.GetKeyDown(KeyCode.RightArrow)) index++;
         index = Mathf.Clamp(index, 0, 2);
         selecter.transform.position = cardimages[index].transform.position;
 
-        if (Input.GetKeyDown(KeyCode.Z) && !select)
+        if (!select)
         {
             SkillManager.Instance.quantity[cards[index]]++;
             select = true;

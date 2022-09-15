@@ -7,16 +7,16 @@ public class GameDebug : MonoBehaviour
 {
     void Start()
     {
-
+        GameInput.DebugKey = () =>
+        {
+            Debug.Log(string.Join(',', Inventory.data));
+            Debug.Log(string.Join(',', Inventory.quantity));
+        };
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Debug.Log(string.Join(',', Inventory.data));
-            Debug.Log(string.Join(',', Inventory.quantity));
-        }
+
     }
 }
 #endif

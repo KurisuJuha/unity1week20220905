@@ -16,9 +16,12 @@ public class CraftBench : MonoBehaviour
 
     public static CraftBenchMode mode;
 
+    public bool left;
+    public bool right;
+
     void Start()
     {
-        gameObject.SetActive(false);
+
     }
 
     void Update()
@@ -57,23 +60,20 @@ public class CraftBench : MonoBehaviour
                 craftGrids[i].gameObject.SetActive(false);
             }
         }
-        bool left = page > 0;
-        bool right = page < (items.Count - 1) / length;
+        left = page > 0;
+        right = page < (items.Count - 1) / length;
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow) && left) select -= craftGrids.Length;
-        if (Input.GetKeyDown(KeyCode.RightArrow) && right) select += craftGrids.Length;
-        if (Input.GetKeyDown(KeyCode.UpArrow) && select - 1 >= 0) select--;
-        if (Input.GetKeyDown(KeyCode.DownArrow) && select + 1 < items.Count) select++;
         if (select < 0) select = 0;
         if (select >= items.Count) select = items.Count - 1;
         page = select / craftGrids.Length;
 
+        SelectCraftGrid.transform.position = craftGrids[select % length].transform.position;
+    }
+
+    public void LateUpdate()
+    {
         LeftArrow.SetActive(left);
         RightArrow.SetActive(right);
-
-        SelectCraftGrid.transform.position = craftGrids[select % length].transform.position;
-
-        if (Input.GetKeyDown(KeyCode.Z)) TryCraft();
     }
 
     public void TryCraft()
@@ -117,6 +117,10 @@ public class CraftBench : MonoBehaviour
 
         AudioManager.Play(AudioType.Failure);
     }
+
+    public void AddPageIndex() => select += craftGrids.Length;
+
+    public void SubPageIndex() => select -= craftGrids.Length;
 }
 
 public enum CraftBenchMode

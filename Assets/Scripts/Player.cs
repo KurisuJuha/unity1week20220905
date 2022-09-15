@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     public bool flip;
     public CameraShake shake;
     public GameObject CraftBenchObj;
+    public UIElement CraftBenchUIElement;
 
     public static Vector2 PlayerPos;
 
@@ -54,14 +55,31 @@ public class Player : MonoBehaviour
 
         // 1,1にtameruboxを設置する
         MapData.SetTile(new Vector2(1, 1), 6);
+
+        GameInput.Use = () =>
+        {
+            Set();
+        };
+        GameInput.Attack = () =>
+        {
+            Attack();
+        };
+        GameInput.Drop = () =>
+        {
+            Drop();
+        };
+        GameInput.HandCraft = () =>
+        {
+            UIManager.Show(CraftBenchUIElement);
+            CraftBench.mode = CraftBenchMode.HandCraft;
+        };
     }
 
     void Update()
     {
         PlayerPos = transform.position;
-        Vector2 velo = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        velo = Vector2.ClampMagnitude(velo, 1);
-        velo *= speed;
+        GameInput.Move = Vector2.ClampMagnitude(GameInput.Move, 1);
+        GameInput.Move *= speed;
 
         // プレイヤーの周囲3x3を読み込む
         Vector2Int playerChunk = Utility.GetChunkPos(transform.position);
@@ -75,39 +93,22 @@ public class Player : MonoBehaviour
         }
 
         // 一定以上のスピードで動いていたらアニメーションする
-        if (velo.sqrMagnitude > 0.4f) animator.state = PlayerAnimationState.Walk;
+        if (GameInput.Move.sqrMagnitude > 0.4f) animator.state = PlayerAnimationState.Walk;
         else animator.state = PlayerAnimationState.Idle;
 
-        // 設置
-        if (Input.GetMouseButton(1)) Set();
-        // 破壊
-        if (Input.GetMouseButton(0)) Attack();
-        // ドロップ
-        if (Input.GetKeyDown(KeyCode.Q)) Drop();
         // HandIndex操作
         SetHandIndex();
 
         // 左右反転
-        if (velo.x < 0) flip = true;
-        if (velo.x > 0) flip = false;
+        if (GameInput.Move.x < 0) flip = true;
+        if (GameInput.Move.x > 0) flip = false;
         transform.localScale = new Vector3(flip ? -1 : 1, 1, 1);
 
-        rb2d.velocity = velo;
+        rb2d.velocity = GameInput.Move;
 
         // 経過時間関係
         HandElapsed += Time.deltaTime * SkillManager.Instance.card_speed;
         if (HandElapsed > HandInterval) HandElapsed = HandInterval;
-
-        // ハンドクラフト
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            CraftBenchObj.SetActive(true);
-            CraftBench.mode = CraftBenchMode.HandCraft;
-            StartCoroutine(usetile(-1, () =>
-            {
-                CraftBenchObj.SetActive(false);
-            }));
-        }
     }
 
     /// <summary>
@@ -127,7 +128,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha9)) HandIndex = 8;
 
         // マウスホイール
-        HandIndexFloat += Input.mouseScrollDelta.y;
+        HandIndexFloat -= GameInput.InventoryScroll;
     }
 
     /// <summary>
@@ -184,19 +185,11 @@ public class Player : MonoBehaviour
                 case 3:
                     CraftBenchObj.SetActive(true);
                     CraftBench.mode = CraftBenchMode.CraftBench;
-                    StartCoroutine(usetile(3, () =>
-                    {
-                        CraftBenchObj.SetActive(false);
-                    }));
                     break;
                 // かまど
                 case 4:
                     CraftBenchObj.SetActive(true);
                     CraftBench.mode = CraftBenchMode.Furnace;
-                    StartCoroutine(usetile(4, () =>
-                    {
-                        CraftBenchObj.SetActive(false);
-                    }));
                     break;
                 // はしご
                 case 2:
@@ -266,27 +259,6 @@ public class Player : MonoBehaviour
 
             AudioManager.Play(AudioType.Failure);
         }
-    }
-
-    /// <summary>
-    /// -1の場合は現在のタイルを初期値とする
-    /// </summary>
-    IEnumerator usetile(int id, System.Action finish)
-    {
-        var pos = PlayerCursor.Pos;
-        if (id == -1)
-        {
-            id = MapData.GetChunk(PlayerCursor.chunkPos).tiles[PlayerCursor.tilePos.x, PlayerCursor.tilePos.y].id;
-        }
-
-        while (true)
-        {
-            if (MapData.GetChunk(PlayerCursor.chunkPos).tiles[PlayerCursor.tilePos.x, PlayerCursor.tilePos.y].id != id) break;
-            if (pos != PlayerCursor.Pos) break;
-            yield return null;
-        }
-
-        finish();
     }
 
     IEnumerator WalkAudio()
