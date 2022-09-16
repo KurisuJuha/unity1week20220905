@@ -106,7 +106,7 @@ MonoBehaviour:
   - Name: UnderDiamondStone
     Tile: {fileID: 11400000, guid: e0416052f4cc7ad479300bb06e53cf18, type: 2}
     canTakeDamage: 1
-    dulability: 1200
+    dulability: 2000
     dropItems:
     - id: 7
       min: 2

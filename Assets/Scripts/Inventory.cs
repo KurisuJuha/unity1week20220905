@@ -7,6 +7,25 @@ public static class Inventory
     public static Item[] data = new Item[9];
     public static int[] quantity = new int[9];
 
+    public static Item handInventory;
+    private static int _handInventoryQuantity;
+    public static int handInventoryQuantity
+    {
+        get
+        {
+            return _handInventoryQuantity;
+        }
+        set
+        {
+            if (value <= 0)
+            {
+                value = 0;
+                handInventory = new Item() { id = 0 };
+            }
+            _handInventoryQuantity = value;
+        }
+    }
+
     public static bool GetItem(int id, int quantity, bool take = false)
     {
         int q = 0;
