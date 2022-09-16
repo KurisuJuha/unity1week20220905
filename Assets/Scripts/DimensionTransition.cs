@@ -44,7 +44,6 @@ public class DimensionTransition : SingletonMonoBehaviour<DimensionTransition>
                     DropItemManager.Instance.SetActive(true);
 
                     updateMap = true;
-                    UnityEngine.Debug.Log("change");
                 }
                 if (!MapData.Changing)
                 {

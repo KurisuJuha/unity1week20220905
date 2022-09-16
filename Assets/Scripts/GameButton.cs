@@ -16,6 +16,7 @@ public class GameButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        GameInputSetter.Instance.InventoryInputMask = true;
         if (clickSprite != null)
         {
             image.sprite = clickSprite;
@@ -40,5 +41,7 @@ public class GameButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             default:
                 break;
         }
+
+        GameInputSetter.Instance.InventoryInputMask = false;
     }
 }

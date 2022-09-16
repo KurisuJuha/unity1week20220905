@@ -6,23 +6,34 @@ using UnityEngine;
 public class GameInputSetter : SingletonMonoBehaviour<GameInputSetter>
 {
     public bool UIInputMask;
+    public bool InventoryInputMask;
 
-    void Update()
+    void LateUpdate()
     {
-        // 使用
-        if (Input.GetMouseButton(1) && !UIInputMask) GameInput.Use();
+        if (!UIInputMask && !InventoryInputMask)
+        {
+            // 使用
+            if (Input.GetMouseButton(1)) GameInput.Use();
 
-        // アタック
-        if (Input.GetMouseButton(0) && !UIInputMask) GameInput.Attack();
+            // アタック
+            if (Input.GetMouseButton(0)) GameInput.Attack();
 
-        //  ハンドクラフト
-        if (Input.GetKeyDown(KeyCode.E) && !UIInputMask) GameInput.HandCraft();
+            //  ハンドクラフト
+            if (Input.GetKeyDown(KeyCode.E)) GameInput.HandCraft();
 
-        // ドロップ
-        if (Input.GetKeyDown(KeyCode.Q) && !UIInputMask) GameInput.Drop();
+            // ドロップ
+            if (Input.GetKeyDown(KeyCode.Q)) GameInput.Drop();
 
-        // ゲームスタート
-        if (Input.anyKeyDown && !UIInputMask) GameInput.GameStart();
+            // ゲームスタート
+            if (Input.anyKeyDown) GameInput.GameStart();
+
+            // 移動ベクトル
+            GameInput.Move = Vector2.ClampMagnitude(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")), 1);
+        }
+        else
+        {
+            GameInput.Move = Vector2.zero;
+        }
 
         // UIを一つ戻す
         if (Input.GetKeyDown(KeyCode.Escape)) GameInput.UIPrev();
@@ -36,9 +47,6 @@ public class GameInputSetter : SingletonMonoBehaviour<GameInputSetter>
         Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         GameInput.MousePosition = mousepos;
 
-        // 移動ベクトル
-        if (!UIInputMask) GameInput.Move = Vector2.ClampMagnitude(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")), 1);
-        else GameInput.Move = Vector2.zero;
 
         // インベントリのスクロール
         GameInput.InventoryScroll = Input.mouseScrollDelta.y;

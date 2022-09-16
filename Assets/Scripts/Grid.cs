@@ -17,6 +17,12 @@ public class Grid : MonoBehaviour
 
     public void onRightClick()
     {
+        (Item item, int quantity) data = HandInventory.IO(Inventory.data[index], Inventory.quantity[index], true);
+
+        Inventory.data[index] = data.item;
+        Inventory.quantity[index] = data.quantity;
+        return;
+
         if (Inventory.handInventoryQuantity == 0)
         {
             // 3
@@ -51,6 +57,12 @@ public class Grid : MonoBehaviour
 
     public void onLeftClick()
     {
+        (Item item, int quantity) data = HandInventory.IO(Inventory.data[index], Inventory.quantity[index], false);
+
+        Inventory.data[index] = data.item;
+        Inventory.quantity[index] = data.quantity;
+        return;
+
         if (Inventory.data[index].id == Inventory.handInventory.id)
         {
             // 5
