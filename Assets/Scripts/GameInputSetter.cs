@@ -34,7 +34,7 @@ public class GameInputSetter : SingletonMonoBehaviour<GameInputSetter>
 
         // マウス位置
         Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        GameInput.MouseTilePosition = new Vector2Int(Mathf.FloorToInt(mousepos.x), Mathf.FloorToInt(mousepos.y));
+        GameInput.MousePosition = mousepos;
 
         // 移動ベクトル
         if (!UIInputMask) GameInput.Move = Vector2.ClampMagnitude(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")), 1);

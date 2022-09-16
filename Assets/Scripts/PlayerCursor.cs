@@ -19,7 +19,7 @@ public class PlayerCursor : MonoBehaviour
     void Update()
     {
         // マウスポジション
-        direction = GameInput.MouseTilePosition;
+        direction = GameInput.MousePosition;
         direction = new Vector2(Mathf.Floor(direction.x), Mathf.Floor(direction.y));
         direction -= new Vector2(Mathf.Floor(Player.transform.position.x), Mathf.Floor(Player.transform.position.y));
         direction = new Vector2(Mathf.Clamp(direction.x, -1, 1), Mathf.Clamp(direction.y, -1, 1));

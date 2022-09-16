@@ -100,8 +100,8 @@ public class Player : MonoBehaviour
         SetHandIndex();
 
         // 左右反転
-        if (GameInput.Move.x < 0) flip = true;
-        if (GameInput.Move.x > 0) flip = false;
+        if (GameInput.MousePosition.x - transform.position.x < 0) flip = true;
+        if (GameInput.MousePosition.x - transform.position.x > 0) flip = false;
         transform.localScale = new Vector3(flip ? -1 : 1, 1, 1);
 
         rb2d.velocity = GameInput.Move;

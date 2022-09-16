@@ -28,7 +28,7 @@ public static class GameInput
 
 
     // マウス位置
-    public static Vector2Int MouseTilePosition;
+    public static Vector2 MousePosition;
 
     // 移動
     public static Vector2 Move;
