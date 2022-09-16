@@ -183,13 +183,12 @@ public class Player : MonoBehaviour
             {
                 // クラフトベンチ
                 case 3:
-                    CraftBenchObj.SetActive(true);
+                    UIManager.Show(CraftBenchUIElement);
                     CraftBench.mode = CraftBenchMode.CraftBench;
                     break;
                 // かまど
                 case 4:
-                    CraftBenchObj.SetActive(true);
-                    CraftBench.mode = CraftBenchMode.Furnace;
+                    UIManager.Show(CraftBenchUIElement); CraftBench.mode = CraftBenchMode.Furnace;
                     break;
                 // はしご
                 case 2:

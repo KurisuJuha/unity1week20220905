@@ -121,6 +121,12 @@ public class CraftBench : MonoBehaviour
     public void AddPageIndex() => select += craftGrids.Length;
 
     public void SubPageIndex() => select -= craftGrids.Length;
+
+    public void SetSelectIndex(int index)
+    {
+        int p = select / craftGrids.Length;
+        select = p * craftGrids.Length + index;
+    }
 }
 
 public enum CraftBenchMode

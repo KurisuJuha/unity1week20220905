@@ -37,7 +37,8 @@ public class GameInputSetter : SingletonMonoBehaviour<GameInputSetter>
         GameInput.MouseTilePosition = new Vector2Int(Mathf.FloorToInt(mousepos.x), Mathf.FloorToInt(mousepos.y));
 
         // 移動ベクトル
-        GameInput.Move = Vector2.ClampMagnitude(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")), 1);
+        if (!UIInputMask) GameInput.Move = Vector2.ClampMagnitude(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")), 1);
+        else GameInput.Move = Vector2.zero;
 
         // インベントリのスクロール
         GameInput.InventoryScroll = Input.mouseScrollDelta.y;

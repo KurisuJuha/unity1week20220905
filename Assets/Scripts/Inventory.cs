@@ -14,6 +14,7 @@ public static class Inventory
         for (int i = 0; i < data.Length; i++)
         {
             if (data[i].id == id) q += Inventory.quantity[i];
+
         }
 
         if (q < quantity) return false;
@@ -32,11 +33,16 @@ public static class Inventory
         {
             if (data[i].id == id)
             {
-                Inventory.quantity[i] -= q;
-                if (Inventory.quantity[i] <= 0)
+                if (quantity[i] <= q)
                 {
-                    q -= Inventory.quantity[i];
+                    q -= quantity[i];
+                    quantity[i] = 0;
                     data[i] = new Item() { id = 0 };
+                }
+                else
+                {
+                    quantity[i] -= q;
+                    q = 0;
                 }
             }
         }
