@@ -280,7 +280,7 @@ MonoBehaviour:
     - id: 16
       quantity: 1
     Can_AddPoint: 1
-    point: 20
+    point: 40
   - Name: GoldIngot
     Sprite: {fileID: 21300000, guid: 77f74625524c2bf4ca22ca3e71564100, type: 3}
     CanPlace: 0
@@ -295,7 +295,7 @@ MonoBehaviour:
     - id: 16
       quantity: 1
     Can_AddPoint: 1
-    point: 40
+    point: 80
   - Name: Diamond
     Sprite: {fileID: 21300000, guid: 8270a588182244943a697a6045af8d3a, type: 3}
     CanPlace: 0
@@ -310,7 +310,7 @@ MonoBehaviour:
     - id: 16
       quantity: 1
     Can_AddPoint: 1
-    point: 200
+    point: 400
   - Name: Rock
     Sprite: {fileID: 21300000, guid: 27dfd8ef4a1286c408487fed915a8af6, type: 3}
     CanPlace: 0

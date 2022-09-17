@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     public CameraShake shake;
     public GameObject CraftBenchObj;
     public UIElement CraftBenchUIElement;
+    public UIElement TameruBoxUIElement;
 
     public static Vector2 PlayerPos;
 
@@ -188,7 +189,8 @@ public class Player : MonoBehaviour
                     break;
                 // かまど
                 case 4:
-                    UIManager.Show(CraftBenchUIElement); CraftBench.mode = CraftBenchMode.Furnace;
+                    UIManager.Show(CraftBenchUIElement); 
+                    CraftBench.mode = CraftBenchMode.Furnace;
                     break;
                 // はしご
                 case 2:
@@ -200,16 +202,7 @@ public class Player : MonoBehaviour
                     break;
                 // タメルボックス
                 case 6:
-                    int id = Inventory.PeekItem(HandIndex).id;
-                    if (Utility.GetItemData(id).Can_AddPoint
-                        && Inventory.quantity[HandIndex] > 0)
-                    {
-                        PointManager.AddPoint(id);
-                        Inventory.quantity[HandIndex]--;
-                        if (Inventory.quantity[HandIndex] <= 0) Inventory.data[HandIndex] = new Item() { id = 0 };
-                        AudioManager.Play(AudioType.Success);
-                    }
-                    HandElapsed = HandInterval - 0.1f;
+                    UIManager.Show(TameruBoxUIElement);
                     break;
                 default:
                     break;

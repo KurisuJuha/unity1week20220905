@@ -26,7 +26,7 @@ public class HandInventory : SingletonMonoBehaviour<HandInventory>
         Instance.gameObject.SetActive(active);
     }
 
-    public static (Item item, int quantity) IO(Item item, int quantity, bool right)
+    public static (Item item, int quantity) IO(Item item, int quantity, bool right, int maxStack = 99)
     {
         if (right)
         {
@@ -36,7 +36,15 @@ public class HandInventory : SingletonMonoBehaviour<HandInventory>
                 int q = quantity;
 
                 quantity = Mathf.FloorToInt(q / 2f);
-                Inventory.handInventoryQuantity = q - Mathf.FloorToInt(q / 2f);
+                if (q - Mathf.FloorToInt(q / 2f) > 99)
+                {
+                    Inventory.handInventoryQuantity = 99;
+                    quantity = q - 99;
+                }
+                else
+                {
+                    Inventory.handInventoryQuantity = q - Mathf.FloorToInt(q / 2f);
+                }
                 Inventory.handInventory = item;
             }
             else
@@ -46,7 +54,7 @@ public class HandInventory : SingletonMonoBehaviour<HandInventory>
                 {
                     item.id = Inventory.handInventory.id;
 
-                    if (quantity < 99)
+                    if (quantity < maxStack)
                     {
                         quantity++;
                         Inventory.handInventoryQuantity--;
@@ -55,13 +63,16 @@ public class HandInventory : SingletonMonoBehaviour<HandInventory>
                 else
                 {
                     // 4
-                    Item _item = item;
-                    int q = quantity;
+                    if (quantity <= 99)
+                    {
+                        Item _item = item;
+                        int q = quantity;
 
-                    item = Inventory.handInventory;
-                    quantity = Inventory.handInventoryQuantity;
-                    Inventory.handInventory = _item;
-                    Inventory.handInventoryQuantity = q;
+                        item = Inventory.handInventory;
+                        quantity = Inventory.handInventoryQuantity;
+                        Inventory.handInventory = _item;
+                        Inventory.handInventoryQuantity = q;
+                    }
                 }
             }
         }
@@ -71,25 +82,39 @@ public class HandInventory : SingletonMonoBehaviour<HandInventory>
             {
                 // 5
                 quantity += Inventory.handInventoryQuantity;
-                if (quantity > 99)
+                if (quantity > maxStack)
                 {
-                    Inventory.handInventoryQuantity = quantity - 99;
-                    quantity = 99;
+                    Inventory.handInventoryQuantity = quantity - maxStack;
+                    quantity = maxStack;
                 }
                 else Inventory.handInventoryQuantity = 0;
             }
             else
             {
                 // 1
-                Item _item = item;
-                int q = quantity;
+                if (quantity <= 99)
+                {
+                    Item _item = item;
+                    int q = quantity;
 
-                item = Inventory.handInventory;
-                quantity = Inventory.handInventoryQuantity;
-                Inventory.handInventory = _item;
-                Inventory.handInventoryQuantity = q;
+                    item = Inventory.handInventory;
+                    quantity = Inventory.handInventoryQuantity;
+                    Inventory.handInventory = _item;
+                    Inventory.handInventoryQuantity = q;
+                }
+                else
+                {
+                    if (Inventory.handInventoryQuantity == 0)
+                    {
+                        quantity -= 99;
+                        Inventory.handInventory = item;
+                        Inventory.handInventoryQuantity = 99;
+                    }
+                }
             }
         }
+
+        if (quantity <= 0) item = new Item() { id = 0 };
 
         return (item, quantity);
     }

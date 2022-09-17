@@ -4,27 +4,30 @@ using UnityEngine;
 
 public class PointManager : SingletonMonoBehaviour<PointManager>
 {
-    public int TotalPoint;
     public int Point;
     public int MaxPoint;
-    public int wave;
+    public int Wave;
 
-    public void addPoint(int id)
+    public void Start()
     {
-        if (GameManager.Instance.settings.items[id].Can_AddPoint)
-        {
-            Point += GameManager.Instance.settings.items[id].point;
+        MaxPoint = Mathf.FloorToInt(GameManager.Instance.settings.MaxPointCurve.Evaluate(0));
+    }
 
-            if (Point >= MaxPoint) 
-            {
-                SkillManager.Instance.Show();
-                wave++;
-                TotalPoint += Point;
-                Point = 0;
-                MaxPoint = Mathf.FloorToInt(GameManager.Instance.settings.MaxPointCurve.Evaluate(wave));
-            }
+    public void Update()
+    {
+        if (Point >= MaxPoint && !SkillManager.Instance.show)
+        {
+            Wave++;
+            Point -= MaxPoint;
+            MaxPoint = Mathf.FloorToInt(GameManager.Instance.settings.MaxPointCurve.Evaluate(Wave));
+            SkillManager.Instance.Show();
         }
     }
 
-    public static void AddPoint(int id) => Instance.addPoint(id);
+    public void addPoint(int id, int quantity)
+    {
+        Point += GameManager.Instance.settings.items[id].point * quantity;
+    }
+
+    public static void AddPoint(int id, int quantity) => Instance.addPoint(id, quantity);
 }

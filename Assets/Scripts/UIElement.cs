@@ -8,7 +8,7 @@ public class UIElement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(keyCode))
+        if (Input.GetKeyDown(keyCode) && !GameInputSetter.Instance.CardTableInputMask)
         {
             UIManager.Prev();
         }

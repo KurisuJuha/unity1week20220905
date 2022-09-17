@@ -7,10 +7,11 @@ public class GameInputSetter : SingletonMonoBehaviour<GameInputSetter>
 {
     public bool UIInputMask;
     public bool InventoryInputMask;
+    public bool CardTableInputMask;
 
     void LateUpdate()
     {
-        if (!UIInputMask && !InventoryInputMask)
+        if (!UIInputMask && !InventoryInputMask && !CardTableInputMask)
         {
             // 使用
             if (Input.GetMouseButton(1)) GameInput.Use();
@@ -36,7 +37,10 @@ public class GameInputSetter : SingletonMonoBehaviour<GameInputSetter>
         }
 
         // UIを一つ戻す
-        if (Input.GetKeyDown(KeyCode.Escape)) GameInput.UIPrev();
+        if (!CardTableInputMask)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape)) GameInput.UIPrev();
+        }
 
         // デバッグキー
         if (Input.GetKeyDown(KeyCode.P)) GameInput.DebugKey();
